@@ -1,4 +1,5 @@
-﻿using Business.Requests.Transmission;
+﻿using Business.Requests.Fuel;
+using Business.Requests.Transmission;
 using Business.Responses.Transmission;
 using Entities.Concrete;
 using System;
@@ -12,7 +13,8 @@ namespace Business.Abstract
     public interface ITransmissionService
     {
         public AddTransmissionResponse Add(AddTransmissionRequest request);
-
+        public void Update(UpdateTransmissionRequest request);
+        public void Delete(DeleteTransmissionRequest request);
         public IList<Transmission> GetList();
     }
     

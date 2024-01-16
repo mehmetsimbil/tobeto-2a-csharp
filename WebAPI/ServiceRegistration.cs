@@ -30,6 +30,10 @@ public static class ServiceRegistration
         cfg.CreateMap<Fuel, AddFuelResponse>();
         cfg.CreateMap<AddTransmissionRequest, Transmission>();
         cfg.CreateMap<Transmission,AddTransmissionResponse>();
+        cfg.CreateMap<UpdateFuelRequest, Fuel>();
+        cfg.CreateMap<DeleteFuelRequest, Fuel>();
+        cfg.CreateMap<UpdateTransmissionRequest,Transmission>();
+        cfg.CreateMap<DeleteTransmissionRequest,Transmission>();
     }).CreateMapper();
     public static readonly IBrandService BrandService = new BrandManager(
         BrandDal,

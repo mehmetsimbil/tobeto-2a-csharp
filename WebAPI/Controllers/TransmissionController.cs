@@ -16,18 +16,30 @@ namespace WebAPI.Controllers
         {
             _transmissionService = ServiceRegistration.TransmissionService;
         }
-        [HttpGet]
+        [HttpGet("GetList")]
         public ICollection<Transmission> GetList()
         {
             IList<Transmission> transmissionList = _transmissionService.GetList();
             return transmissionList;
         }
 
-        [HttpPost]
+        [HttpPost("Add")]
         public ActionResult AddTransmissionResponse(AddTransmissionRequest request)
         {
             AddTransmissionResponse response = _transmissionService.Add(request);
             return CreatedAtAction(nameof(GetList), response);
+        }
+
+        [HttpPut("Update")]
+        public void Update(UpdateTransmissionRequest request)
+        {
+            _transmissionService.Update(request);
+        }
+
+        [HttpDelete("Delete")]
+        public void Delete(DeleteTransmissionRequest request)
+        {
+            _transmissionService.Delete(request);
         }
     }
 }

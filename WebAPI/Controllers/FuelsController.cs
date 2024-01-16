@@ -16,18 +16,28 @@ namespace WebAPI.Controllers
         {
             _fuelService = ServiceRegistration.FuelService;
         }
-        [HttpGet]
+        [HttpGet("GetList")]
         public ICollection<Fuel> GetList()
         {
             IList<Fuel> fuelList = _fuelService.GetList();
             return fuelList;
         }
 
-        [HttpPost]
+        [HttpPost("Add")]
         public ActionResult<AddFuelResponse> Add(AddFuelRequest request)
         {
             AddFuelResponse response = _fuelService.Add(request);
             return CreatedAtAction(nameof(GetList), response);
+        }
+        [HttpPut("Update")]
+        public void Update(UpdateFuelRequest request)
+        {
+            _fuelService.Update(request);
+        }
+        [HttpDelete("Delete")]
+        public void Delete(DeleteFuelRequest request)
+        {
+            _fuelService.Delete(request);
         }
     }
 }

@@ -17,5 +17,16 @@ namespace DataAccess.Concrete.InMemory
             return nextId;
             
         }
+        public void Update(Fuel fuel)
+        {
+            var fuelToUpdate = _entities.FirstOrDefault(x=> x.Id == fuel.Id);
+            fuelToUpdate.Name= fuel.Name;
+        }
+
+        public void Delete(Fuel fuel)
+        {
+            var fuelToDelete = _entities.FirstOrDefault(x => x.Id == fuel.Id);
+            _entities.Remove(fuelToDelete);
+        }
     }
 }

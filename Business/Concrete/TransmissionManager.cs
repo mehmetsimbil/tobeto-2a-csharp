@@ -39,6 +39,20 @@ namespace Business.Concrete
             return response;
         }
 
-        
+        public void Update(UpdateTransmissionRequest request)
+        {
+            Transmission transmission = _transmissionDal.GetList().FirstOrDefault(x=>x.Id == request.Id);
+            _transmissionBusinessRules.CheckIfTransmissionExists(transmission.Id);
+            Transmission transmissionToUpdate = _mapper.Map<Transmission>(request);
+            _transmissionDal.Update(transmissionToUpdate);
+        }
+
+        public void Delete(DeleteTransmissionRequest request)
+        {
+            Transmission transmission = _transmissionDal.GetList().FirstOrDefault(x => x.Id == request.Id);
+            _transmissionBusinessRules.CheckIfTransmissionExists(transmission.Id);
+            Transmission transmissionToDelete = _mapper.Map<Transmission>(request);
+            _transmissionDal.Delete(transmissionToDelete);
+        }
     }
 }

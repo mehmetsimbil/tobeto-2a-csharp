@@ -1,4 +1,5 @@
 ﻿using DataAccess.Abstract;
+using Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,16 @@ namespace Business.BusinessRules
             {
                 throw new Exception("Fuel already exists.");
             }
+        }
+
+        public void CheckIfFuelExists(int fuelId)
+        {
+            bool isExists = _fuelDal.GetList().Any(x=>x.Id == fuelId);
+            if(!isExists)
+            {
+                throw new Exception("Fuel not be exists.");
+            }
+            
         }
 
     }

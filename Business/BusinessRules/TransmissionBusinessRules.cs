@@ -22,5 +22,15 @@ namespace Business.BusinessRules
                 throw new Exception("Transmission already exists.");
             }
         }
+
+        public void CheckIfTransmissionExists(int transmissionId)
+        {
+            bool isExists = _transmissionDal.GetList().Any(x => x.Id == transmissionId);
+            if (!isExists)
+            {
+                throw new Exception("Transmission not be exists.");
+            }
+
+        }
     }
 }

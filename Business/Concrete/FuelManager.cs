@@ -40,5 +40,21 @@ namespace Business.Concrete
             AddFuelResponse response = _mapper.Map<AddFuelResponse>(fuelToAdd);
             return response;
         }
+
+        public void Update(UpdateFuelRequest request)
+        {
+            Fuel fuel = _fuelDal.GetList().FirstOrDefault(x=> x.Id == request.Id);
+            _fuelBusinessRules.CheckIfFuelExists(fuel.Id);
+            Fuel fuelToUpdate = _mapper.Map<Fuel>(request);
+            _fuelDal.Update(fuelToUpdate);
+        }
+
+        public void Delete(DeleteFuelRequest request)
+        {
+            Fuel fuel = _fuelDal.GetList().FirstOrDefault(x=> x.Id == request.Id);
+            _fuelBusinessRules.CheckIfFuelExists(fuel.Id);
+            Fuel fuelToDelete= _mapper.Map<Fuel>(request);
+            _fuelDal.Delete(fuelToDelete);
+        }
     }
 }

@@ -12,6 +12,8 @@ namespace Business.Abstract
     public interface IFuelService
     {
         public AddFuelResponse Add(AddFuelRequest request);
+        public void Update(UpdateFuelRequest request);
+        public void Delete(DeleteFuelRequest request);
         public IList<Fuel> GetList();
     }
 }
