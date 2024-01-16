@@ -9,7 +9,13 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Concrete.InMemory
 {
-    public class InMemoryFuelDal : InMemoryEntityRepositoryBase<Fuel,int> ,IFuelDal
+    public class InMemoryFuelDal : InMemoryEntityRepositoryBase<Fuel, int>, IFuelDal
     {
+        protected override int generatedId()
+        {
+            int nextId = _entities.Count == 0 ? 1 : _entities.Max(e=>e.Id) +1;
+            return nextId;
+            
+        }
     }
 }

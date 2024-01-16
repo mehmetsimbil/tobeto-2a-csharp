@@ -1,4 +1,9 @@
-﻿using Business.Abstract;
+﻿using AutoMapper;
+using Business.Abstract;
+using Business.BusinessRules;
+using Business.Requests.Transmission;
+using Business.Responses.Transmission;
+using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -10,16 +15,30 @@ namespace Business.Concrete
 {
     public class TransmissionManager : ITransmissionService
     {
-        private ITransmissionService _transmissionService;
-        public TransmissionManager(ITransmissionService transmissionService)
+        private ITransmissionDal _transmissionDal;
+        private readonly TransmissionBusinessRules _transmissionBusinessRules;
+        private readonly IMapper _mapper;
+
+        public TransmissionManager(ITransmissionDal transmissionDal, TransmissionBusinessRules transmissionBusinessRules, IMapper mapper)
         {
-            _transmissionService = transmissionService;
+            _transmissionDal = transmissionDal;
+            _transmissionBusinessRules = transmissionBusinessRules;
+            _mapper = mapper;
+        }
+            public IList<Transmission> GetList()
+                    {
+                        IList<Transmission> transmissionList = _transmissionDal.GetList();
+                        return transmissionList;
+                    }
+        public AddTransmissionResponse Add(AddTransmissionRequest request)
+        {
+            _transmissionBusinessRules.CheckIfTransmissionNameAlreadyExists(request.Name);
+            Transmission transmissionToAdd = _mapper.Map<Transmission>(request); 
+            _transmissionDal.Add(transmissionToAdd);
+            AddTransmissionResponse response = _mapper.Map<AddTransmissionResponse>(transmissionToAdd);
+            return response;
         }
 
-        public Transmission Add(Transmission transmission)
-        {
-            _transmissionService.Add(transmission);
-            return transmission;
-        }
+        
     }
 }

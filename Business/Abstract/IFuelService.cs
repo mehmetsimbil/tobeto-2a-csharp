@@ -1,4 +1,6 @@
-﻿using Entities.Concrete;
+﻿using Business.Requests.Fuel;
+using Business.Responses.Fuel;
+using Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +11,7 @@ namespace Business.Abstract
 {
     public interface IFuelService
     {
-        public Fuel Add(Fuel fuel);
+        public AddFuelResponse Add(AddFuelRequest request);
+        public IList<Fuel> GetList();
     }
 }

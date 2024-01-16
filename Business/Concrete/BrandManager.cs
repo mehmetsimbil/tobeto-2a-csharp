@@ -1,4 +1,8 @@
-﻿using Business.Abstract;
+﻿using AutoMapper;
+using Business.Abstract;
+using Business.BusinessRules;
+using Business.Requests.Brand;
+using Business.Responses.Brand;
 using DataAccess.Abstract;
 using Entities.Concrete;
 
@@ -7,23 +11,31 @@ namespace Business.Concrete;
 public class BrandManager : IBrandService
 {
     private IBrandDal _brandDal;
+    private readonly BrandBusinessRules _brandBusinessRules;
+    private readonly IMapper _mapper;
 
-    public BrandManager(IBrandDal brandDal)
+    public BrandManager(IBrandDal brandDal, BrandBusinessRules brandBusinessRules, IMapper mapper)
     {
         _brandDal = brandDal; //new InMemoryBrandDal(); // Başka katmanların class'ları new'lenmez. Bu yüzden dependency injection kullanıyoruz.
+        _brandBusinessRules = brandBusinessRules;
+        _mapper = mapper;
     }
 
-    public Brand Add(Brand brand)
+    public AddBrandResponse Add(AddBrandRequest request)
     {
         // İş Kuralları
+        _brandBusinessRules.CheckIfBrandNameAlreadyExist(request.Name);
+
         // Validation
         // Yetki kontrolü
         // Cache
         // Transaction
 
         //Brand addedBrand =
-        _brandDal.Add(brand);
-        return brand;
+        Brand brandToAdd = _mapper.Map<Brand>(request);
+        _brandDal.Add(brandToAdd);
+        AddBrandResponse response = _mapper.Map<AddBrandResponse>(brandToAdd);
+        return response;
     }
 
     public IList<Brand> GetList()

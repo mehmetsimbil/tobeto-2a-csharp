@@ -1,4 +1,9 @@
-﻿using Business.Abstract;
+﻿using AutoMapper;
+using Business.Abstract;
+using Business.BusinessRules;
+using Business.Requests.Fuel;
+using Business.Responses.Fuel;
+using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -10,16 +15,30 @@ namespace Business.Concrete
 {
     public class FuelManager : IFuelService
     {
-        private IFuelService _fuelService;
-        public FuelManager(IFuelService fuelService)
+        private IFuelDal _fuelDal;
+        private readonly FuelBusinessRules _fuelBusinessRules;
+        private readonly IMapper _mapper;
+        public FuelManager(IFuelDal fuelDal, FuelBusinessRules fuelBusinessRules, IMapper mapper)
         {
-            _fuelService = fuelService;
+            _fuelDal = fuelDal;
+            _fuelBusinessRules = fuelBusinessRules;
+            _mapper = mapper;
         }
 
-        public Fuel Add(Fuel fuel)
+
+        public IList<Fuel> GetList()
         {
-            _fuelService.Add(fuel);
-            return fuel;
+            IList<Fuel> fuelList = _fuelDal.GetList();
+            return fuelList;
+        }
+
+        public AddFuelResponse Add(AddFuelRequest request)
+        {
+            _fuelBusinessRules.CheckIfFuelNameAlreadyExists(request.Name);
+            Fuel fuelToAdd = _mapper.Map<Fuel>(request);
+            _fuelDal.Add(fuelToAdd);
+            AddFuelResponse response = _mapper.Map<AddFuelResponse>(fuelToAdd);
+            return response;
         }
     }
 }

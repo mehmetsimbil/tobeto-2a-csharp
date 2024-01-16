@@ -1,4 +1,6 @@
-﻿using Entities.Concrete;
+﻿using Business.Requests.Transmission;
+using Business.Responses.Transmission;
+using Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +11,9 @@ namespace Business.Abstract
 {
     public interface ITransmissionService
     {
-        public Transmission Add(Transmission transmission);
+        public AddTransmissionResponse Add(AddTransmissionRequest request);
+
+        public IList<Transmission> GetList();
     }
+    
 }
