@@ -1,4 +1,5 @@
-﻿using Business.Requests.Fuel;
+﻿using Business.Requests.Brand;
+using Business.Requests.Fuel;
 using Business.Responses.Fuel;
 using Entities.Concrete;
 using System;
@@ -14,6 +15,6 @@ namespace Business.Abstract
         public AddFuelResponse Add(AddFuelRequest request);
         public void Update(UpdateFuelRequest request);
         public void Delete(DeleteFuelRequest request);
-        public IList<Fuel> GetList();
+        public GetFuelListResponse GetList(GetFuelListRequest request);
     }
 }

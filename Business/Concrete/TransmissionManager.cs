@@ -25,10 +25,11 @@ namespace Business.Concrete
             _transmissionBusinessRules = transmissionBusinessRules;
             _mapper = mapper;
         }
-            public IList<Transmission> GetList()
+            public GetTransmissionListResponse GetList(GetTransmissionListRequest request)
                     {
                         IList<Transmission> transmissionList = _transmissionDal.GetList();
-                        return transmissionList;
+                        GetTransmissionListResponse response = _mapper.Map<GetTransmissionListResponse>(transmissionList);
+                        return response;
                     }
         public AddTransmissionResponse Add(AddTransmissionRequest request)
         {

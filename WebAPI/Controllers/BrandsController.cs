@@ -16,10 +16,10 @@ public class BrandsController : ControllerBase
 {
     private readonly IBrandService _brandService;
 
-    public BrandsController()
+    public BrandsController(IBrandService brandService)
     {
         // Her HTTP Request için yeni bir Controller nesnesi oluşturulur.
-        _brandService = ServiceRegistration.BrandService;
+        _brandService = brandService;
         // Daha sonra IoC Container yapımızı kurduğumuz Dependency Injection ile daha verimli hale getiricez.
     }
 
@@ -31,10 +31,10 @@ public class BrandsController : ControllerBase
     //}
 
     [HttpGet] // GET http://localhost:5245/api/brands
-    public ICollection<Brand> GetList()
+    public GetBrandListResponse GetList([FromQuery]GetBrandListRequest request)
     {
-        IList<Brand> brandList = _brandService.GetList();
-        return brandList;
+        GetBrandListResponse response = _brandService.GetList(request); // referans typeler varsayılan olarak request bodyden alınır.
+        return response;
     }
 
     //[HttpPost("/add")] // POST http://localhost:5245/api/brands/add

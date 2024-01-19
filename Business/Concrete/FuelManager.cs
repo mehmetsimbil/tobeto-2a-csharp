@@ -1,15 +1,12 @@
 ﻿using AutoMapper;
 using Business.Abstract;
 using Business.BusinessRules;
+using Business.Requests.Brand;
 using Business.Requests.Fuel;
 using Business.Responses.Fuel;
 using DataAccess.Abstract;
 using Entities.Concrete;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Business.Concrete
 {
@@ -26,11 +23,13 @@ namespace Business.Concrete
         }
 
 
-        public IList<Fuel> GetList()
+        public GetFuelListResponse GetList(GetFuelListRequest request)
         {
             IList<Fuel> fuelList = _fuelDal.GetList();
-            return fuelList;
+            GetFuelListResponse response = _mapper.Map<GetFuelListResponse>(fuelList);
+            return response;
         }
+       
 
         public AddFuelResponse Add(AddFuelRequest request)
         {
@@ -56,5 +55,7 @@ namespace Business.Concrete
             Fuel fuelToDelete= _mapper.Map<Fuel>(request);
             _fuelDal.Delete(fuelToDelete);
         }
+
+      
     }
 }

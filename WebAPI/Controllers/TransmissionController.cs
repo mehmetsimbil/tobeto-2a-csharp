@@ -12,15 +12,15 @@ namespace WebAPI.Controllers
     public class TransmissionController : ControllerBase
     {
         private readonly ITransmissionService _transmissionService;
-        public TransmissionController()
+        public TransmissionController(ITransmissionService transmissionService)
         {
-            _transmissionService = ServiceRegistration.TransmissionService;
+            _transmissionService = transmissionService;
         }
         [HttpGet("GetList")]
-        public ICollection<Transmission> GetList()
+        public GetTransmissionListResponse GetList([FromQuery] GetTransmissionListRequest request)
         {
-            IList<Transmission> transmissionList = _transmissionService.GetList();
-            return transmissionList;
+            GetTransmissionListResponse response = _transmissionService.GetList(request);
+            return response;
         }
 
         [HttpPost("Add")]

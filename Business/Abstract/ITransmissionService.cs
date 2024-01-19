@@ -15,7 +15,7 @@ namespace Business.Abstract
         public AddTransmissionResponse Add(AddTransmissionRequest request);
         public void Update(UpdateTransmissionRequest request);
         public void Delete(DeleteTransmissionRequest request);
-        public IList<Transmission> GetList();
+        public GetTransmissionListResponse GetList(GetTransmissionListRequest request);
     }
     
 }
