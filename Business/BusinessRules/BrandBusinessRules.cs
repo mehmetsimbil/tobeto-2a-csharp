@@ -1,4 +1,5 @@
-﻿using DataAccess.Abstract;
+﻿using Core.CrossCuttingConcerns.Exceptions;
+using DataAccess.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace Business.BusinessRules
         bool isExist = _brandDal.GetList().Any(b=>b.Name == brandName);
             if (isExist)
             {
-                throw new Exception("Brand already exists.");
+                throw new BusinessException("Brand already exists.");
             }
         }
     }

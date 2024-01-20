@@ -5,6 +5,7 @@ using DataAccess.Abstract;
 using DataAccess.Concrete.InMemory;
 using System.Reflection;
 using Business.DependencyResolvers;
+using Core.CrossCuttingConcerns.Exceptions;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -35,5 +36,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseGlobalExceptionBuilder();
 
 app.Run();

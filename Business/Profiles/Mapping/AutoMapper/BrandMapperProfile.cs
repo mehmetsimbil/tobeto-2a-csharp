@@ -16,7 +16,7 @@ namespace Business.Profiles.Mapping.AutoMapper
             CreateMap<Brand,AddBrandResponse>();
 
             CreateMap<Brand, BrandListItemDto>();
-            CreateMap<BrandListItemDto, GetBrandListResponse>()
+            CreateMap<IList<Brand>, GetBrandListResponse>()
                 .ForMember(
                 destinationMember: dest => dest.Items,
                 memberOptions: opt => opt.MapFrom(mapExpression: src => src)

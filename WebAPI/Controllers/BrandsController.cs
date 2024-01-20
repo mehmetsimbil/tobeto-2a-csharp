@@ -41,7 +41,21 @@ public class BrandsController : ControllerBase
     [HttpPost] // POST http://localhost:5245/api/brands
     public ActionResult<AddBrandResponse> Add(AddBrandRequest request)
     {
+        try
+        { 
         AddBrandResponse response = _brandService.Add(request);
         return CreatedAtAction(nameof(GetList),response); //201 Created
+        }
+        catch (Core.CrossCuttingConcerns.Exceptions.BusinessException exception)
+        {
+            return BadRequest(new Core.CrossCuttingConcerns.Exceptions.BusinessProblemDetails()
+            {
+                Title = "Business Exception",
+                Status = StatusCodes.Status400BadRequest,
+                Detail = exception.Message,
+                Instance = HttpContext.Request.Path
+            });
+        }
+        
     }
 }

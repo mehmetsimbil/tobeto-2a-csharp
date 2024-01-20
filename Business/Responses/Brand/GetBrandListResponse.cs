@@ -14,7 +14,7 @@ namespace Business.Responses.Brand
 
         public GetBrandListResponse(ICollection<BrandListItemDto> items)
         {
-            
+            Items = items;
         }
     }
 }
