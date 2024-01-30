@@ -1,49 +1,64 @@
 ﻿using Core.DataAccess.InMemory;
 using Core.Entities;
 using DataAccess.Abstract;
+using DataAccess.Concrete.EntityFramework.Context;
 using Entities.Concrete;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfModelDal : InMemoryEntityRepositoryBase<Model, int>, IModelDal
+    public class EfModelDal : IModelDal
     {
-        private readonly HashSet<Model> _entities = new();
+        private readonly RentACarContext _context;
 
-        protected override int generatedId()
+        public EfModelDal(RentACarContext context)
         {
-            int nextId = _entities.Count == 0
-                ? 1
-                : _entities.Max(e => e.Id) + 1;
-            return nextId;
-        }
-        public IList<Model> GetBrandList(int id)
-        {
-            IList<Model> entities = _entities.Where(e => e.DeletedAt.HasValue == false && e.BrandId==id).ToList();
-            return entities;
+            _context = context;
         }
 
-        public IList<Model> GetFuelList(int id)
+        public Model Add(Model entity)
         {
-            IList<Model> entities = _entities.Where(e => e.DeletedAt.HasValue == false && e.FuelId == id ).ToList();
-            return entities;
+            entity.CreatedAt = DateTime.UtcNow;
+            //_context.Entry(entity).State = EntityState.Added;
+            _context.Models.Add(entity);
+
+            _context.SaveChanges(); // Unit of Work
+            return entity;
         }
 
-        public IList<Model> GetTransmissionList(int id)
+        public Model Delete(Model entity, bool isSoftDelete = true)
         {
-            IList<Model> entities = _entities.Where(e => e.DeletedAt.HasValue == false && e.TransmissionId == id).ToList();
-            return entities;
+            entity.DeletedAt = DateTime.UtcNow;
+            // _context.Entry(entity).State = EntityState.Modified;
+
+            if (!isSoftDelete)
+                _context.Models.Remove(entity);
+
+            _context.SaveChanges();
+            return entity;
         }
 
-        public void AddModel(Model model)
+        public Model? Get(Func<Model, bool> predicate)
         {
-            model.CreatedAt = DateTime.UtcNow;
-               _entities.Add(model);
+            Model? model = _context.Models.FirstOrDefault(predicate); // örn. FirstOrDefault() metodu veritabanına sorguyu çalıştırır.
+            return model;
         }
 
-        public IList<Model> GelModelList()
+        public IList<Model> GetList(Func<Model, bool>? predicate = null)
         {
-            IList<Model> entities = _entities.Where(e => e.DeletedAt.HasValue == false).ToList();
-            return entities;
+            IQueryable<Model> query = _context.Set<Model>();
+            if (predicate != null)
+                query = query.Where(predicate).AsQueryable();
+
+            return query.ToList(); // örn. ToList() metodu veritabanına sorguyu çalıştırır.
+        }
+
+        public Model Update(Model entity)
+        {
+            entity.UpdateAt = DateTime.UtcNow;
+            _context.Models.Update(entity);
+
+            _context.SaveChanges();
+            return entity;
         }
     }
 }

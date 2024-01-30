@@ -1,9 +1,4 @@
-using Business.Abstract;
-using Business.BusinessRules;
-using Business.Concrete;
-using DataAccess.Abstract;
-using DataAccess.Concrete.InMemory;
-using System.Reflection;
+
 using Business.DependencyResolvers;
 using Core.CrossCuttingConcerns.Exceptions;
 
@@ -15,7 +10,7 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 //builder.Services.AddSingleton<BrandBusinessRules>();
 //builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
-builder.Services.AddBusinessServices();
+builder.Services.AddBusinessServices(builder.Configuration);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -24,6 +19,7 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+app.UseGlobalExceptionHandling();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -37,6 +33,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.UseGlobalExceptionBuilder();
+
 
 app.Run();

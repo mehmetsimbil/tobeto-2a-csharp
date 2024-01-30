@@ -3,15 +3,22 @@ using Business.BusinessRules;
 using Business.Concrete;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
+using Microsoft.EntityFrameworkCore;
 using DataAccess.Concrete.InMemory;
+using DataAccess.Concrete.EntityFramework.Context;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+
 
 namespace Business.DependencyResolvers
 {
     public static class ServiceCollectionBusinessExtension
     {
-        public static IServiceCollection AddBusinessServices(this IServiceCollection services)
+        public static IServiceCollection AddBusinessServices(
+        this IServiceCollection services,
+        IConfiguration configuration
+    )
         {
             services
             .AddSingleton<IBrandService, BrandManager>()
@@ -21,16 +28,33 @@ namespace Business.DependencyResolvers
             .AddSingleton<IFuelDal, InMemoryFuelDal>()
             .AddSingleton<FuelBusinessRules>()
             .AddSingleton<ITransmissionService, TransmissionManager>()
-            .AddSingleton<ITransmissionDal,InMemoryTransmissionDal>()
+            .AddSingleton<ITransmissionDal, InMemoryTransmissionDal>()
             .AddSingleton<TransmissionBusinessRules>()
-            .AddSingleton<IModelService,ModelManager>()
-            .AddSingleton<IModelDal,EfModelDal>()
-            .AddSingleton<ModelBusinessRules>()   
-            .AddSingleton<ICarService,CarManager>()
-            .AddSingleton<ICarDal,EfCarDal>()
-            .AddSingleton<CarBusinessRules>()
+            .AddScoped<IModelService, ModelManager>()
+            .AddScoped<IModelDal, EfModelDal>()
+            .AddScoped<ModelBusinessRules>()
+            .AddScoped<ICarService, CarManager>()
+            .AddScoped<ICarDal, EfCarDal>()
+            .AddScoped<CarBusinessRules>()
+            .AddScoped<IUsersService, UsersManager>()
+            .AddScoped<IUsersDal, EfUsersDal>() 
+            .AddScoped<UsersBusinessRules>()
+            .AddScoped<IIndividualCustomerDal, EfIndividualCustomerDal>()
+            .AddScoped<IIndividualCustomerService,IndividualCustomerManager>()
+            .AddScoped<ICustomersDal,EfCustomersDal>()
+            .AddScoped<ICustomerService,CustomerManager>()
+            .AddScoped<CustomerBusinessRules>()
+            .AddScoped<ICorporateCustomerDal,EfCorporateCustomerDal>()
+            .AddScoped<ICorporateCustomerService,CorporateCustomerManager>()
+            .AddScoped<IIndividualCustomerDal,EfIndividualCustomerDal>()
+            .AddScoped<IIndividualCustomerService,IndividualCustomerManager>()
+            .AddScoped<IndividualCustomerBusinessRules>()
+            
             .AddAutoMapper(Assembly.GetExecutingAssembly());
-                
+
+            services.AddDbContext<RentACarContext>(
+             options => options.UseSqlServer(configuration.GetConnectionString("RentACarMSSQL22"))
+         );
             return services;
         }
     }

@@ -597,11 +597,11 @@ IUserDal userDal = new SqlDbUserDal();  //new InMemoryUserDal();
 userDal.Add( user );
 #endregion
 
-// Configuration.cs
-IBrandDal brandDal = new InMemoryBrandDal();
-IBrandService brandService = new BrandManager(brandDal);
-// Configuration.cs
+//// Configuration.cs
+//IBrandDal brandDal = new InMemoryBrandDal();
+//IBrandService brandService = new BrandManager(brandDal);
+//// Configuration.cs
 
-// > RentACar add brand BMW
-Brand brandToAdd = new Brand { Name = "BMW" };
-brandService.Add(brandToAdd);
+//// > RentACar add brand BMW
+//Brand brandToAdd = new Brand { Name = "BMW" };
+//brandService.Add(brandToAdd);

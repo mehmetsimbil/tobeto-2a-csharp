@@ -9,16 +9,31 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfCarDal : InMemoryEntityRepositoryBase<Car, int>, ICarDal
+    public class EfCarDal : ICarDal
     {
-        protected override int generatedId()
+        public Car Add(Car entity)
         {
-
-            int nextId = _entities.Count == 0
-                ? 1
-                : _entities.Max(e => e.Id) + 1;
-            return nextId;
+            throw new NotImplementedException();
         }
 
+        public Car Delete(Car entity, bool isSoftDelete = true)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Car? Get(Func<Car, bool> predicate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IList<Car> GetList(Func<Car, bool>? predicate = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Car Update(Car entity)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

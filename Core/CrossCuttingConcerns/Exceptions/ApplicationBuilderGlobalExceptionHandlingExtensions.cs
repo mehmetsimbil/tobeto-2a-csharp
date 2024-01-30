@@ -9,7 +9,7 @@ namespace Core.CrossCuttingConcerns.Exceptions
 {
     public static class ApplicationBuilderGlobalExceptionHandlingExtensions
     {
-        public static IApplicationBuilder UseGlobalExceptionBuilder(this IApplicationBuilder app)
+        public static IApplicationBuilder UseGlobalExceptionHandling(this IApplicationBuilder app)
         {
            return app.UseMiddleware<ExceptionMiddleware>();
         }

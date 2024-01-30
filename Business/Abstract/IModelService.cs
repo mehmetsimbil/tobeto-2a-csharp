@@ -7,11 +7,14 @@ namespace Business.Abstract
 {
     public interface IModelService 
     {
-        public AddModelResponse AddModel(AddModelRequest request);
-        public IList<Model> GetBrandList(int id);
-        public IList<Model> GetFuelList(int id);
-        public IList<Model> GetTransmissionList(int id);
+        public GetModelListResponse GetList(GetModelListRequest request);
 
-        public GetModelListResponse GetModelList(GetModelListRequest request);
+        public GetModelByIdResponse GetById(GetModelByIdRequest request);
+
+        public AddModelResponse Add(AddModelRequest request);
+
+        public UpdateModelResponse Update(UpdateModelRequest request);
+
+        public DeleteModelResponse Delete(DeleteModelRequest request);
     }
 }
