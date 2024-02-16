@@ -21,9 +21,9 @@ namespace Business.DependencyResolvers
     )
         {
             services
-            .AddSingleton<IBrandService, BrandManager>()
-            .AddSingleton<IBrandDal, InMemoryBrandDal>()
-            .AddSingleton<BrandBusinessRules>()
+            .AddScoped<IBrandService, BrandManager>()
+            .AddScoped<IBrandDal, EfBrandDal>()
+            .AddScoped<BrandBusinessRules>()
             .AddSingleton<IFuelService, FuelManager>()
             .AddSingleton<IFuelDal, InMemoryFuelDal>()
             .AddSingleton<FuelBusinessRules>()
