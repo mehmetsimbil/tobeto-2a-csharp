@@ -9,6 +9,7 @@ using DataAccess.Concrete.EntityFramework.Context;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using Core.Utilities.Security.JWT;
 
 
 namespace Business.DependencyResolvers
@@ -36,8 +37,8 @@ namespace Business.DependencyResolvers
             .AddScoped<ICarService, CarManager>()
             .AddScoped<ICarDal, EfCarDal>()
             .AddScoped<CarBusinessRules>()
-            .AddScoped<IUsersService, UsersManager>()
-            .AddScoped<IUsersDal, EfUsersDal>() 
+            .AddScoped<IUserService, UserManager>()
+            .AddScoped<IUserDal, EfUserrDal>() 
             .AddScoped<UsersBusinessRules>()
             .AddScoped<IIndividualCustomerDal, EfIndividualCustomerDal>()
             .AddScoped<IIndividualCustomerService,IndividualCustomerManager>()
@@ -45,11 +46,12 @@ namespace Business.DependencyResolvers
             .AddScoped<ICustomerService,CustomerManager>()
             .AddScoped<CustomerBusinessRules>()
             .AddScoped<ICorporateCustomerDal,EfCorporateCustomerDal>()
-            .AddScoped<ICorporateCustomerService,CorporateCustomerManager>()
+            //.AddScoped<ICorporateCustomerService,CorporateCustomerManager>()
             .AddScoped<IIndividualCustomerDal,EfIndividualCustomerDal>()
             .AddScoped<IIndividualCustomerService,IndividualCustomerManager>()
+            .AddScoped<IUserRoleDal,EfUserRoleDal>()
             .AddScoped<IndividualCustomerBusinessRules>()
-            
+            .AddScoped<ITokenHelper,JwtTokenHelper>()
             .AddAutoMapper(Assembly.GetExecutingAssembly());
 
             services.AddDbContext<RentACarContext>(

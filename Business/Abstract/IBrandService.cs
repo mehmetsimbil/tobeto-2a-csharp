@@ -9,4 +9,6 @@ public interface IBrandService
     public AddBrandResponse Add(AddBrandRequest request);
 
     public GetBrandListResponse GetList(GetBrandListRequest request);
+
+    Brand? GetById(int id);
 }

@@ -2,6 +2,7 @@
 using Business.Dtos.User;
 using Business.Requests.Users;
 using Business.Responses.Users;
+using Core.Entities;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -15,16 +16,16 @@ namespace Business.Profiles.Mapping.AutoMapper
     {
         public UsersMapperProfile()
         {
-            CreateMap<AddUsersRequest, Users>();
-            CreateMap<Users, UserListItemDto>();
+            CreateMap<AddUsersRequest, Userr>();
+            CreateMap<Userr, UserListItemDto>();
             
-            CreateMap<IList<Users>, GetUsersListResponse>()
+            CreateMap<IList<Userr>, GetUsersListResponse>()
                 .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src));
            
-            CreateMap<Users, DeleteUsersResponse>();
+            CreateMap<Userr, DeleteUsersResponse>();
             
-            CreateMap<UpdateUsersRequest, Users>();
-            CreateMap<Users,UpdateUserResponse>();
+            CreateMap<UpdateUsersRequest, Userr>();
+            CreateMap<Userr,UpdateUserResponse>();
         }
     }
 }

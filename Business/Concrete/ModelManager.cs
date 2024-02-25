@@ -29,6 +29,7 @@ namespace Business.Concrete
            ValidationTool.Validate(new AddModelRequestValidator(),request);
             _modelBusinessRules.CheckIfModelNameExists(request.Name);
             _modelBusinessRules.CheckIfModelYearShouldBeInLast20Years(request.Year);
+            _modelBusinessRules.CheckIfBrandExists(request.BrandId);
             var modelToAdd = _mapper.Map<Model>(request);
             Model addedModel = _modelDal.Add(modelToAdd);
             var response = _mapper.Map<AddModelResponse>(addedModel);
@@ -76,7 +77,7 @@ namespace Business.Concrete
             Model? modelToUpdate = _modelDal.Get(predicate: model => model.Id == request.Id); // 0x123123
             _modelBusinessRules.CheckIfModelExists(modelToUpdate);
             _modelBusinessRules.CheckIfModelYearShouldBeInLast20Years(request.Year);
-
+            _modelBusinessRules.CheckIfBrandExists(request.BrandId);
             //modelToUpdate = _mapper.Map<Model>(request); // 0x333123
             /* Bunu kullanmayacağız çünkü bizim için yeni bir nesne (referans) oluşturuyor.
             Ve ayrıca entity sınıfında olup da request sınıfında olmayan alanlar (örn. CreatedAt vb.) varsayılan değerler alacak,

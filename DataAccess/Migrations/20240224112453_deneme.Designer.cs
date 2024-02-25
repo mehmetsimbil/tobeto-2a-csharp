@@ -4,6 +4,7 @@ using DataAccess.Concrete.EntityFramework.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(RentACarContext))]
-    partial class RentACarContextModelSnapshot : ModelSnapshot
+    [Migration("20240224112453_deneme")]
+    partial class deneme
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,9 +46,6 @@ namespace DataAccess.Migrations
                     b.Property<DateTime?>("UpdateAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("UserRoleId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
@@ -68,23 +68,17 @@ namespace DataAccess.Migrations
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("RoleId1")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("UpdateAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserId1")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("RoleId1");
+                    b.HasIndex("RoleId");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("UserId");
 
                     b.ToTable("UserRoles");
                 });
@@ -120,9 +114,6 @@ namespace DataAccess.Migrations
 
                     b.Property<DateTime?>("UpdateAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("UserRoleId")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -443,11 +434,13 @@ namespace DataAccess.Migrations
                 {
                     b.HasOne("Core.Entities.Role", "Role")
                         .WithMany()
-                        .HasForeignKey("RoleId1");
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Core.Entities.Userr", "User")
                         .WithMany()
-                        .HasForeignKey("UserId1");
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Role");
 

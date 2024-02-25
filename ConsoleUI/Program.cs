@@ -591,10 +591,10 @@ Console.WriteLine("-------");
 //entityRepository.UpdateEntity(student);
 //entityRepository.UpdateEntity(instructor);
 
-IUserDal userDal = new SqlDbUserDal();  //new InMemoryUserDal();
+//IUserDal userDal = new SqlDbUserDal();  //new InMemoryUserDal();
 // Dependency Injection // IoC
 
-userDal.Add( user );
+//userDal.Add( user );
 #endregion
 
 //// Configuration.cs
